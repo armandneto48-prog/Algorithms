@@ -1,0 +1,186 @@
+#Listas ligadas
+# varias operacoes
+
+# No de lista simplesmente ligada
+class Celula:
+    # construtor
+    def __init__(self, valor=None, prox=None):
+        self.valor = valor
+        self.prox = prox 
+
+#No de lista duplamente ligada
+class Celula2:
+    # construtor
+    def __init__(self, valor=None, prox=None, ant=None):
+        self.valor = valor
+        self.prox = prox 
+        self.ant = prox 
+
+# inserir novo elemento no inicio
+def inserir_ini(inicio, novo):
+    novo.prox = inicio
+    return(novo)
+
+def inserir_fim(inicio,novo):
+    if(inicio is None):
+        return novo
+    pt = inicio
+    while(pt.prox is not None):
+        pt = pt.prox
+    pt.prox = novo
+    novo.prox = None
+    return inicio
+
+# apagar um valor dado
+def delete(inicio,val):
+	if(inicio is None):
+		return None
+	# e o primeiro elemento?
+	if(inicio.valor == val):
+		temp = inicio.prox
+		inicio.prox = None
+		return temp
+	pt = inicio
+	ant = pt
+	while(pt is not None and pt.valor != val):
+		ant = pt
+		pt = pt.prox
+	if(pt is not None):
+		ant.prox = pt.prox
+		pt.prox = None
+		return inicio
+
+# insercao ordenada
+def insOrd(inicio, val):
+    novo = Celula(val)
+    if(inicio is None):
+        return novo
+    pt = inicio
+    ant = pt
+    while(pt is not None and val > pt.valor):
+        ant = pt
+        pt = pt.prox
+
+    if(pt == inicio):
+        novo.prox = pt
+        inicio = novo
+    else:
+        novo.prox = pt
+        ant.prox = novo
+    return inicio
+
+
+# imprime lista ligada
+def printa(inicio):
+    a = inicio
+    while(a is not None):
+        print(a.valor)
+        a = a.prox
+
+# exe 1)  inverter lista dada
+def inverte(inicio):
+    # casa de lista vazia e de um so elemento
+    if(inicio is None):
+        return inicio
+    if(inicio.prox is None):
+        return inicio
+
+    #outros casos
+    ant = inicio
+    pt = ant.prox
+    ant.prox = None
+    while(pt is not None):
+        aux = pt.prox
+        pt.prox = ant
+        ant = pt
+        pt = aux
+
+    return(ant)
+
+# exe 1 d) apagar multiplos
+def multiplos(inicio, n):
+    pt = inicio
+    ant = pt
+    while(pt is not None):
+        if(pt.valor % n == 0):
+            if(pt == inicio):
+                inicio = pt.prox
+                pt.prox = None
+                pt = inicio
+                ant = pt
+            else:
+                ant.prox = pt.prox
+                tmp = pt
+                pt = pt.prox
+                tmp.prox = None
+        else:
+            ant = pt
+            pt = pt.prox
+
+    return inicio
+
+
+
+# main prog
+eu = Celula(1.0)
+ou = Celula(3.2)
+inicio = eu
+inicio = inserir_ini(inicio, ou)
+
+
+# imprime lista ligada
+printa(inicio)
+
+print()
+
+# inseriro no fim 
+eu = Celula(7.0)
+ou = Celula(8.2)
+inicio = inserir_fim(inicio, eu)
+inicio = inserir_fim(inicio, ou)
+inicio = inserir_fim(inicio, Celula(9.5))
+
+printa(inicio)
+print()
+
+inicio = delete(inicio, 7.0)
+printa(inicio)
+
+print()
+
+inicio = None
+inicio = inserir_fim(inicio, Celula(9))
+inicio = insOrd(inicio, 5)
+inicio = insOrd(inicio, 3)
+inicio = insOrd(inicio, 1)
+inicio = insOrd(inicio, 8)
+inicio = insOrd(inicio, 2)
+printa(inicio)
+#testar inverte()
+print()
+inicio = inverte(inicio)
+printa(inicio)
+
+# verificar que cadeia esta bem!
+print()
+eu=Celula(15)
+inicio = inserir_fim(inicio,eu)
+printa(inicio)
+
+
+#eliminar multiplos de 2
+print()
+
+inicio = None
+inicio = inserir_fim(inicio, Celula(9))
+inicio = insOrd(inicio, 5)
+inicio = insOrd(inicio, 7)
+inicio = insOrd(inicio, 2)
+inicio = insOrd(inicio, 8)
+inicio = insOrd(inicio, 4)
+printa(inicio)
+print()
+inicio = multiplos(inicio,2)
+printa(inicio)
+
+print()
