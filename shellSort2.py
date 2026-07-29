@@ -13,6 +13,9 @@ def shellSort(V, gaps):
                 j -= h
             V[j] = key
 
+
+
+
 # --- Análise de Performance ---
 tamanhos = [1000, 5000, 10000]
 tempos = []
